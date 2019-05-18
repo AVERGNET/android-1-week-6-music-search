@@ -8,6 +8,7 @@ import com.google.gson.JsonParseException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by rjaylward on 2019-05-11
@@ -25,11 +26,9 @@ public class ItunesSearchResultsDeserialzer implements JsonDeserializer<ItunesSe
         //TODO loop through all the elements in the results JsonArray and add them to the list
         for(JsonElement element: json.getAsJsonObject().getAsJsonArray("results")){
 
-            ItunesSearchResults itunesSearchResults = context.deserialize(element.getValue(), ItunesSearchResults.class);
+            ItunesSongItem song = context.deserialize(element, ItunesSongItem.class);
 
-            itunesSearchResults.setSongs(element.getKey());
-
-            itunesSearchResults.add(itunesSearchResults);
+            songs.add(song);
         }
         results.setSongs(songs);
 
